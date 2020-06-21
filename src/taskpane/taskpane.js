@@ -7,6 +7,7 @@
 
 import FindBlankColumns from '../utils/1-FindBlankColumns'
 import SortBlankColumns from '../utils/2-SortBlankColumns';
+import RemoveBlankColumns from '../utils/3-RemoveBlankColumns';
 
 Office.onReady(info => {
     if (info.host === Office.HostType.Excel) {
@@ -66,11 +67,10 @@ export async function run() {
             // await context.sync();
             // sheet.getRange(`${blankColumns.address[blankColumns.address.length - 2]}:CC`).clear()
             // sheet.getRange("A1").getEntireRow().delete(Excel.DeleteShiftDirection.up);
-            // sheet.getRange("A1").values = [
-            //     [
-            //         "Casket Name"
-            //     ]
-            // ]
+
+            await RemoveBlankColumns()
+
+
 
             // sheet.getRange("A2").getEntireRow().delete(Excel.DeleteShiftDirection.up)
             // sheet.getRange("A2").getEntireRow().delete(Excel.DeleteShiftDirection.up)
@@ -80,17 +80,18 @@ export async function run() {
             //     searchDirection: "Forward"
             // });
 
-            // const heightRange = sheet.getRange("B1:B1000");
-            // const tableHeight = context.workbook.functions.countA(heightRange);
+            const heightRange = sheet.getRange("H1:H1000");
+            const tableHeight = context.workbook.functions.countA(heightRange);
 
             // lastColumn.load("address");
-            // tableHeight.load("value");
-            // await context.sync();
+            tableHeight.load("value");
+            await context.sync();
             // console.log(lastColumn.address)
-            // console.log(tableHeight.value)
-            // const tableRange = `A1:${lastColumn.address[lastColumn.address.length - 2]}${tableHeight.value}`;
-            // const table = context.workbook.tables.add(tableRange, true);
-            // table.name = "POTable";
+            console.log(heightRange)
+            console.log(tableHeight.value)
+                // const tableRange = `A1:${lastColumn.address[lastColumn.address.length - 2]}${tableHeight.value}`;
+                // const table = context.workbook.tables.add(tableRange, true);
+                // table.name = "POTable";
 
             // const tableHeader = table.getHeaderRowRange()
 

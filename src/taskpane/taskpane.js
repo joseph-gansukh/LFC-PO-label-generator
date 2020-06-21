@@ -6,6 +6,7 @@
 /* global console, document, Excel, Office */
 
 import FindBlankColumns from '../utils/1-FindBlankColumns'
+import SortBlankColumns from '../utils/2-SortBlankColumns';
 
 Office.onReady(info => {
     if (info.host === Office.HostType.Excel) {
@@ -40,71 +41,73 @@ export async function run() {
             // ];
             // sheet.getRange("B1").getEntireRow().copyFrom("A1", Excel.RangeCopyType.formulas, true);
 
-            sheet.getRange("A:C").delete(Excel.DeleteShiftDirection.left);
-            const range = sheet.getRange("A1:BB5000");
-            const header = range.find("Not blank", {});
-            header.load("columnIndex");
-            await context.sync();
-            range.sort.apply(
-                [{
-                    key: header.columnIndex,
-                    sortOn: Excel.SortOn.value
-                }],
-                false /*matchCase*/ ,
-                false /*hasHeaders*/ ,
-                Excel.SortOrientation.columns
-            );
+            // sheet.getRange("A:C").delete(Excel.DeleteShiftDirection.left);
+            // const range = sheet.getRange("A1:BB5000");
+            // const header = range.find("Not blank", {});
+            // header.load("columnIndex");
+            // await context.sync();
+            // range.sort.apply(
+            //     [{
+            //         key: header.columnIndex,
+            //         sortOn: Excel.SortOn.value
+            //     }],
+            //     false /*matchCase*/ ,
+            //     false /*hasHeaders*/ ,
+            //     Excel.SortOrientation.columns
+            // );
 
-            const range1 = sheet.getRange("A1").getEntireRow();
-            const blankColumns = range1.find("Blank", {
-                completeMatch: true
-            });
-            blankColumns.load("address");
-            await context.sync();
-            sheet.getRange(`${blankColumns.address[blankColumns.address.length - 2]}:CC`).clear()
-            sheet.getRange("A1").getEntireRow().delete(Excel.DeleteShiftDirection.up);
-            sheet.getRange("A1").values = [
-                [
-                    "Casket Name"
-                ]
-            ]
+            await SortBlankColumns()
 
-            sheet.getRange("A2").getEntireRow().delete(Excel.DeleteShiftDirection.up)
-            sheet.getRange("A2").getEntireRow().delete(Excel.DeleteShiftDirection.up)
-            const lastColumn = sheet.getRange("A1").getEntireRow().find("Open Balance", {
-                matchCase: true,
-                completeMatch: true,
-                searchDirection: "Forward"
-            });
+            // const range1 = sheet.getRange("A1").getEntireRow();
+            // const blankColumns = range1.find("Blank", {
+            //     completeMatch: true
+            // });
+            // blankColumns.load("address");
+            // await context.sync();
+            // sheet.getRange(`${blankColumns.address[blankColumns.address.length - 2]}:CC`).clear()
+            // sheet.getRange("A1").getEntireRow().delete(Excel.DeleteShiftDirection.up);
+            // sheet.getRange("A1").values = [
+            //     [
+            //         "Casket Name"
+            //     ]
+            // ]
 
-            const heightRange = sheet.getRange("B1:B1000");
-            const tableHeight = context.workbook.functions.countA(heightRange);
+            // sheet.getRange("A2").getEntireRow().delete(Excel.DeleteShiftDirection.up)
+            // sheet.getRange("A2").getEntireRow().delete(Excel.DeleteShiftDirection.up)
+            // const lastColumn = sheet.getRange("A1").getEntireRow().find("Open Balance", {
+            //     matchCase: true,
+            //     completeMatch: true,
+            //     searchDirection: "Forward"
+            // });
 
-            lastColumn.load("address");
-            tableHeight.load("value");
-            await context.sync();
-            console.log(lastColumn.address)
-            console.log(tableHeight.value)
-            const tableRange = `A1:${lastColumn.address[lastColumn.address.length - 2]}${tableHeight.value}`;
-            const table = context.workbook.tables.add(tableRange, true);
-            table.name = "POTable";
+            // const heightRange = sheet.getRange("B1:B1000");
+            // const tableHeight = context.workbook.functions.countA(heightRange);
 
-            const tableHeader = table.getHeaderRowRange()
+            // lastColumn.load("address");
+            // tableHeight.load("value");
+            // await context.sync();
+            // console.log(lastColumn.address)
+            // console.log(tableHeight.value)
+            // const tableRange = `A1:${lastColumn.address[lastColumn.address.length - 2]}${tableHeight.value}`;
+            // const table = context.workbook.tables.add(tableRange, true);
+            // table.name = "POTable";
 
-            const dateColumn = tableHeader.find("Date", {}).getEntireColumn().delete(Excel.DeleteShiftDirection.left)
-            const numColumn = tableHeader.find("Num", {}).getEntireColumn().delete(Excel.DeleteShiftDirection.left)
-            const memoColumn = tableHeader.find("Memo", {}).getEntireColumn().delete(Excel.DeleteShiftDirection.left)
-            const sourceNameColumn = tableHeader.find("Source Name", {}).getEntireColumn().delete(Excel.DeleteShiftDirection.left)
-            const delivDateColumn = tableHeader.find("Deliv Date", {}).getEntireColumn().delete(Excel.DeleteShiftDirection.left)
-            const rcvColumn = tableHeader.find("Rcv'd", {}).getEntireColumn().delete(Excel.DeleteShiftDirection.left)
-            const backOrderColumn = tableHeader.find("Backordered", {}).getEntireColumn().delete(Excel.DeleteShiftDirection.left)
-            const amountColumn = tableHeader.find("Amount", {}).getEntireColumn().delete(Excel.DeleteShiftDirection.left)
-            const balanceColumn = tableHeader.find("Open Balance", {}).getEntireColumn().delete(Excel.DeleteShiftDirection.left)
-            const nameColumn = tableHeader.find("Name", {
-                matchCase: true,
-                completeMatch: true,
-                searchDirection: "Forward"
-            }).getEntireColumn().delete(Excel.DeleteShiftDirection.left)
+            // const tableHeader = table.getHeaderRowRange()
+
+            // const dateColumn = tableHeader.find("Date", {}).getEntireColumn().delete(Excel.DeleteShiftDirection.left)
+            // const numColumn = tableHeader.find("Num", {}).getEntireColumn().delete(Excel.DeleteShiftDirection.left)
+            // const memoColumn = tableHeader.find("Memo", {}).getEntireColumn().delete(Excel.DeleteShiftDirection.left)
+            // const sourceNameColumn = tableHeader.find("Source Name", {}).getEntireColumn().delete(Excel.DeleteShiftDirection.left)
+            // const delivDateColumn = tableHeader.find("Deliv Date", {}).getEntireColumn().delete(Excel.DeleteShiftDirection.left)
+            // const rcvColumn = tableHeader.find("Rcv'd", {}).getEntireColumn().delete(Excel.DeleteShiftDirection.left)
+            // const backOrderColumn = tableHeader.find("Backordered", {}).getEntireColumn().delete(Excel.DeleteShiftDirection.left)
+            // const amountColumn = tableHeader.find("Amount", {}).getEntireColumn().delete(Excel.DeleteShiftDirection.left)
+            // const balanceColumn = tableHeader.find("Open Balance", {}).getEntireColumn().delete(Excel.DeleteShiftDirection.left)
+            // const nameColumn = tableHeader.find("Name", {
+            //     matchCase: true,
+            //     completeMatch: true,
+            //     searchDirection: "Forward"
+            // }).getEntireColumn().delete(Excel.DeleteShiftDirection.left)
 
             // const a2 = sheet.getRange("A2")
             // a2.load('values')

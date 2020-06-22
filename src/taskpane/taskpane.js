@@ -8,6 +8,7 @@
 import FindBlankColumns from '../utils/1-FindBlankColumns'
 import SortBlankColumns from '../utils/2-SortBlankColumns';
 import RemoveBlankColumns from '../utils/3-RemoveBlankColumns';
+import CreateTable from '../utils/4-CreateTable';
 
 Office.onReady(info => {
     if (info.host === Office.HostType.Excel) {
@@ -80,20 +81,21 @@ export async function run() {
             //     searchDirection: "Forward"
             // });
 
-            const heightRange = sheet.getRange("H1:H1000");
-            const tableHeight = context.workbook.functions.countA(heightRange);
+            // const heightRange = sheet.getRange("H1:H1000");
+            // const tableHeight = context.workbook.functions.countA(heightRange);
 
             // lastColumn.load("address");
-            tableHeight.load("value");
-            await context.sync();
+            // tableHeight.load("value");
+            // await context.sync();
             // console.log(lastColumn.address)
-            console.log(heightRange)
-            console.log(tableHeight.value)
-                // const tableRange = `A1:${lastColumn.address[lastColumn.address.length - 2]}${tableHeight.value}`;
-                // const table = context.workbook.tables.add(tableRange, true);
-                // table.name = "POTable";
+            // console.log(tableHeight.value)
+            // const tableRange = `A1:${lastColumn.address[lastColumn.address.length - 2]}${tableHeight.value}`;
+            // const table = context.workbook.tables.add(tableRange, true);
+            // table.name = "POTable";
 
             // const tableHeader = table.getHeaderRowRange()
+
+
 
             // const dateColumn = tableHeader.find("Date", {}).getEntireColumn().delete(Excel.DeleteShiftDirection.left)
             // const numColumn = tableHeader.find("Num", {}).getEntireColumn().delete(Excel.DeleteShiftDirection.left)
@@ -119,6 +121,8 @@ export async function run() {
             // ]
 
             // console.log(`The range address was ${range.address}.`);
+
+            await CreateTable()
         });
     } catch (error) {
         console.error(error);

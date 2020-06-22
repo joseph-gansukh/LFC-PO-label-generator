@@ -2,6 +2,7 @@
 const createTable = async() => {
     await Excel.run(async context => {
         const sheet = context.workbook.worksheets.getActiveWorksheet()
+
         const lastColumn = sheet.getRange("A1").getEntireRow().find("Open Balance", {
             matchCase: true,
             completeMatch: true,
@@ -26,20 +27,42 @@ const createTable = async() => {
 
         const tableHeader = table.getHeaderRowRange()
 
-        const dateColumn = tableHeader.find("Date", {}).getEntireColumn().delete(Excel.DeleteShiftDirection.left)
-        const numColumn = tableHeader.find("Num", {}).getEntireColumn().delete(Excel.DeleteShiftDirection.left)
-        const memoColumn = tableHeader.find("Memo", {}).getEntireColumn().delete(Excel.DeleteShiftDirection.left)
-        const sourceNameColumn = tableHeader.find("Source Name", {}).getEntireColumn().delete(Excel.DeleteShiftDirection.left)
-        const delivDateColumn = tableHeader.find("Deliv Date", {}).getEntireColumn().delete(Excel.DeleteShiftDirection.left)
-        const rcvColumn = tableHeader.find("Rcv'd", {}).getEntireColumn().delete(Excel.DeleteShiftDirection.left)
-        const backOrderColumn = tableHeader.find("Backordered", {}).getEntireColumn().delete(Excel.DeleteShiftDirection.left)
-        const amountColumn = tableHeader.find("Amount", {}).getEntireColumn().delete(Excel.DeleteShiftDirection.left)
-        const balanceColumn = tableHeader.find("Open Balance", {}).getEntireColumn().delete(Excel.DeleteShiftDirection.left)
+        const dateColumn = tableHeader.find("Date", {}).getEntireColumn()
+        if (dateColumn != null) dateColumn.delete(Excel.DeleteShiftDirection.left)
+
+        const numColumn = tableHeader.find("Num", {}).getEntireColumn()
+        if (numColumn != null) numColumn.delete(Excel.DeleteShiftDirection.left)
+
+        const memoColumn = tableHeader.find("Memo", {}).getEntireColumn()
+        if (memoColumn != null) memoColumn.delete(Excel.DeleteShiftDirection.left)
+
+        const sourceNameColumn = tableHeader.find("Source Name", {}).getEntireColumn()
+        if (sourceNameColumn != null) sourceNameColumn.delete(Excel.DeleteShiftDirection.left)
+
+        const delivDateColumn = tableHeader.find("Deliv Date", {}).getEntireColumn()
+        if (delivDateColumn != null) delivDateColumn.delete(Excel.DeleteShiftDirection.left)
+
+        const rcvColumn = tableHeader.find("Rcv'd", {}).getEntireColumn()
+        if (rcvColumn != null) rcvColumn.delete(Excel.DeleteShiftDirection.left)
+
+        const backOrderColumn = tableHeader.find("Backordered", {}).getEntireColumn()
+        if (backOrderColumn != null) backOrderColumn.delete(Excel.DeleteShiftDirection.left)
+
+        const amountColumn = tableHeader.find("Amount", {}).getEntireColumn()
+        if (amountColumn != null) amountColumn.delete(Excel.DeleteShiftDirection.left)
+
+        const balanceColumn = tableHeader.find("Open Balance", {}).getEntireColumn()
+        if (backOrderColumn != null) balanceColumn.delete(Excel.DeleteShiftDirection.left)
+
         const nameColumn = tableHeader.find("Name", {
             matchCase: true,
             completeMatch: true,
             searchDirection: "Forward"
-        }).getEntireColumn().delete(Excel.DeleteShiftDirection.left)
+        }).getEntireColumn()
+        if (nameColumn != null) nameColumn.delete(Excel.DeleteShiftDirection.left)
+
+        await context.sync()
+
 
 
     })

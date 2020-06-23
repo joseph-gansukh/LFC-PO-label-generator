@@ -65,8 +65,8 @@ const createTable = async() => {
         table.load('columns')
 
         await context.sync()
-            // console.log(table.rows.toJSON())
 
+        // ------- CREATE CASKET OBJECTS FROM TABLE COLUMN DATA ------
         let casketsObjs = []
 
         const tableColumns = table.columns.toJSON().items
@@ -77,7 +77,6 @@ const createTable = async() => {
 
         for (let i = 1; i < (((tableHeight.value - 1) / 2 * 3) + 1); i = i + 3) {
             let casketNameArray = casketNames[i].split(" (")
-
             casketsObjs.push({
                 casket: casketNameArray[0],
                 qty: casketQty[i + 1],
@@ -87,9 +86,16 @@ const createTable = async() => {
         }
         console.log(casketsObjs)
 
+        // ------- CREATE FINAL OBJECT WITH RESPECT TO QTY AMOUNT ------
 
+        let casketObjList = []
 
-
+        casketsObjs.forEach(obj => {
+            for (let i = 0; i < obj.qty; i++) {
+                casketObjList.push(obj)
+            }
+        })
+        console.log('casketObjList: ', casketObjList);
 
     })
 }

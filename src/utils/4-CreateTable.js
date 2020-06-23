@@ -61,7 +61,33 @@ const createTable = async() => {
         }).getEntireColumn()
         if (nameColumn != null) nameColumn.delete(Excel.DeleteShiftDirection.left)
 
+        table.load('rows')
+        table.load('columns')
+
         await context.sync()
+            // console.log(table.rows.toJSON())
+
+        let casketsObjs = []
+
+        const tableColumns = table.columns.toJSON().items
+
+        const casketNames = tableColumns[0].values.flat()
+        const casketQty = tableColumns[1].values.flat()
+        const barCodeNum = tableColumns[2].values.flat()
+
+        for (let i = 1; i < (((tableHeight.value - 1) / 2 * 3) + 1); i = i + 3) {
+            let casketNameArray = casketNames[i].split(" (")
+
+            casketsObjs.push({
+                casket: casketNameArray[0],
+                qty: casketQty[i + 1],
+                barCode: barCodeNum[i + 1]
+            })
+
+        }
+        console.log(casketsObjs)
+
+
 
 
 

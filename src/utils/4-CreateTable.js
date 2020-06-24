@@ -96,6 +96,9 @@ const createTable = async() => {
             }
         })
         console.log('casketObjList: ', casketObjList);
+        
+        // ------- Delete current table and make new list table with casketObjList -------
+        
 
     })
 }

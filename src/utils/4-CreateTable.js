@@ -100,6 +100,9 @@ const createTable = async() => {
         // ------- Delete current table and make new list table with casketObjList -------
         
 
+        // ------- Set print area -------
+
+
     })
 }
 

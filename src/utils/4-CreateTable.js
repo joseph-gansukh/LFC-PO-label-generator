@@ -109,7 +109,7 @@ const createTable = async() => {
         })
         console.log('casketObjList: ', casketObjList);
 
-        // ------- Delete current table and make new list table with casketObjList -------
+        // ------- Delete current table and make new list with casketObjList -------
 
         table.delete()
         await context.sync()
@@ -118,16 +118,26 @@ const createTable = async() => {
 
         sheet.getRange('A1').getEntireColumn().format.columnWidth = 200
 
-        casketObjList.map(casketObj => values.push([moment().format("MMM DD, YYYY")], [casketObj.casket], [casketObj.barCode], ['']))
+        casketObjList.map(casketObj => values.push([casketObj.casket], [casketObj.barCode], [`Rcvd on:   ${moment().format('MM/DD/YYYY')}`], [""]))
 
         let range = sheet.getRange(`A1:A${values.length}`);
         range.values = values;
 
-        for (let i = 3; i < values.length; i = i + 4) {
-            let currentRange = sheet.getRange(`A${i}`)
+        for (let i = 3; i < values.length + 3; i = i + 4) {
+            let currentRange = sheet.getRange(`A${i - 1}`)
+
+            let dateRange = sheet.getRange(`A${i}`)
+            dateRange.format.font.size = 18
+            dateRange.format.horizontalAlignment = Excel.HorizontalAlignment.center
+
+            let nameRange = sheet.getRange(`A${i-2}`)
+            nameRange.format.font.size = 18
+            nameRange.format.horizontalAlignment = Excel.HorizontalAlignment.center
             currentRange.numberFormat = [
                 ['##']
             ]
+            currentRange.format.horizontalAlignment = Excel.HorizontalAlignment.center
+            currentRange.format.font.size = 16
             currentRange.format.font.name = 'IDAHC39M Code 39 Barcode';
 
         }

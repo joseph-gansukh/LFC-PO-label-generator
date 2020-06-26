@@ -27,6 +27,7 @@
         "watch": "webpack --mode development --watch"
     },
     "dependencies": {
+        "moment": "^2.27.0",
         "websocket-extensions": ">=0.1.4"
     },
     "devDependencies": {

@@ -1,4 +1,6 @@
 /* eslint-disable no-undef */
+import moment from 'moment';
+
 const createTable = async() => {
     await Excel.run(async context => {
         const sheet = context.workbook.worksheets.getActiveWorksheet()
@@ -67,13 +69,21 @@ const createTable = async() => {
         await context.sync()
 
         // ------- CREATE CASKET OBJECTS FROM TABLE COLUMN DATA ------
+
+
+        await context.sync()
+
         let casketsObjs = []
 
         const tableColumns = table.columns.toJSON().items
 
-        const casketNames = tableColumns[0].values.flat()
-        const casketQty = tableColumns[1].values.flat()
-        const barCodeNum = tableColumns[2].values.flat()
+        // const casketNames = tableColumns[0].values.flat()
+        // const casketQty = tableColumns[1].values.flat()
+        // const barCodeNum = tableColumns[2].values.flat()
+
+        const casketNames = tableColumns[0].values.reduce((acc, val) => acc.concat(val), []);
+        const casketQty = tableColumns[1].values.reduce((acc, val) => acc.concat(val), []);
+        const barCodeNum = tableColumns[2].values.reduce((acc, val) => acc.concat(val), []);
 
         for (let i = 1; i < (((tableHeight.value - 1) / 2 * 3) + 1); i = i + 3) {
             let casketNameArray = casketNames[i].split(" (")
@@ -84,6 +94,8 @@ const createTable = async() => {
             })
 
         }
+
+        await context.sync()
         console.log(casketsObjs)
 
         // ------- CREATE FINAL OBJECT WITH RESPECT TO QTY AMOUNT ------
@@ -96,9 +108,30 @@ const createTable = async() => {
             }
         })
         console.log('casketObjList: ', casketObjList);
-        
+
         // ------- Delete current table and make new list table with casketObjList -------
-        
+
+        table.delete()
+        await context.sync()
+
+        let values = []
+
+        sheet.getRange('A1').getEntireColumn().format.columnWidth = 200
+
+        casketObjList.map(casketObj => values.push([moment().format("MMM DD, YYYY")], [casketObj.casket], [casketObj.barCode], ['']))
+
+        let range = sheet.getRange(`A1:A${values.length}`);
+        range.values = values;
+
+        for (let i = 3; i < values.length; i = i + 4) {
+            let currentRange = sheet.getRange(`A${i}`)
+            currentRange.numberFormat = [
+                ['##']
+            ]
+            currentRange.format.font.name = 'IDAHC39M Code 39 Barcode';
+
+        }
+
 
         // ------- Set print area -------
 

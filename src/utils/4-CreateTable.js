@@ -114,33 +114,41 @@ const createTable = async() => {
         table.delete()
         await context.sync()
 
-        let values = []
+        let values = [
+            ['Casket', 'Barcode', 'Date']
+        ]
+        console.log('values: ', values);
 
         sheet.getRange('A1').getEntireColumn().format.columnWidth = 200
 
-        casketObjList.map(casketObj => values.push([casketObj.casket], [casketObj.barCode], [`Rcvd on:   ${moment().format('MM/DD/YYYY')}`], [""]))
+        casketObjList.map(casketObj => values.push([casketObj.casket, casketObj.barCode, `Rcvd on:   ${moment().format('MM/DD/YYYY')}`]))
 
-        let range = sheet.getRange(`A1:A${values.length}`);
+        let range = sheet.getRange(`A1:C${values.length}`);
         range.values = values;
+        console.log('values: ', values);
 
-        for (let i = 3; i < values.length + 3; i = i + 4) {
-            let currentRange = sheet.getRange(`A${i - 1}`)
+        sheet.getRange("B1").getEntireColumn().numberFormat = [
+            ['##']
+        ]
 
-            let dateRange = sheet.getRange(`A${i}`)
-            dateRange.format.font.size = 18
-            dateRange.format.horizontalAlignment = Excel.HorizontalAlignment.center
+        // for (let i = 3; i < values.length + 3; i = i + 3) {
+        //     let currentRange = sheet.getRange(`A${i - 1}`)
 
-            let nameRange = sheet.getRange(`A${i-2}`)
-            nameRange.format.font.size = 18
-            nameRange.format.horizontalAlignment = Excel.HorizontalAlignment.center
-            currentRange.numberFormat = [
-                ['##']
-            ]
-            currentRange.format.horizontalAlignment = Excel.HorizontalAlignment.center
-            currentRange.format.font.size = 16
-            currentRange.format.font.name = 'IDAHC39M Code 39 Barcode';
+        //     let dateRange = sheet.getRange(`A${i}`)
+        //     dateRange.format.font.size = 18
+        //     dateRange.format.horizontalAlignment = Excel.HorizontalAlignment.center
 
-        }
+        //     let nameRange = sheet.getRange(`A${i-2}`)
+        //     nameRange.format.font.size = 18
+        //     nameRange.format.horizontalAlignment = Excel.HorizontalAlignment.center
+        //     currentRange.numberFormat = [
+        //         ['##']
+        //     ]
+        //     currentRange.format.horizontalAlignment = Excel.HorizontalAlignment.center
+        //     currentRange.format.font.size = 16
+        //     currentRange.format.font.name = 'IDAHC39M Code 39 Barcode';
+
+        // }
 
 
         // ------- Set print area -------

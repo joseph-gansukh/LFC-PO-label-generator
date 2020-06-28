@@ -151,7 +151,7 @@ const createTable = async() => {
         // }
 
 
-        // ------- Set print area -------
+        // ------- Fix multiple product types -------
 
 
     })

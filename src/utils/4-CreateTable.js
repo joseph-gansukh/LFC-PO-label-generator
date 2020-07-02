@@ -142,10 +142,8 @@ const createTable = async() => {
 
         }
 
-
-        // ------- Set print area -------
-
-
+        // Need to add * before and after each barcode
+        
     })
 }
 

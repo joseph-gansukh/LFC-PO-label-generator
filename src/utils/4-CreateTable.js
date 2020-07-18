@@ -143,7 +143,8 @@ const createTable = async() => {
         }
 
         // Need to add * before and after each barcode
-        // might be better to use different barcode font that does not require *
+        // Might be better to use different barcode font that does not require *
+        // barcodejs
         // Need to account for different product types. Could use csv parse
     })
 }

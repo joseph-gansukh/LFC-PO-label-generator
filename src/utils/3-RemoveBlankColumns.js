@@ -1,5 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
+
+// Remove blank columns
 const removeBlankColumns = async() => {
     await Excel.run(async cxt => {
         const sheet = cxt.workbook.worksheets.getActiveWorksheet();

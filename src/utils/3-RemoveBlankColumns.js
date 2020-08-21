@@ -5,6 +5,7 @@
 const removeBlankColumns = async() => {
     await Excel.run(async cxt => {
         const sheet = cxt.workbook.worksheets.getActiveWorksheet();
+        console.log({sheet})
         const range = sheet.getRange("A1").getEntireRow();
         const blankColumns = range.find("Blank", {
             completeMatch: true

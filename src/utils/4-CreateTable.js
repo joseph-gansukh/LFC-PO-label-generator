@@ -74,6 +74,8 @@ const createTable = async() => {
         await context.sync()
 
         let casketsObjs = []
+        
+        // console.log({casketObjs})
 
         const tableColumns = table.columns.toJSON().items
 

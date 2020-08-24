@@ -123,6 +123,7 @@ const createTable = async() => {
         casketObjList.map(casketObj => values.push([casketObj.casket], [casketObj.barCode], [`Rcvd on:   ${moment().format('MM/DD/YYYY')}`], [""]))
 
         let range = sheet.getRange(`A1:A${values.length}`);
+        // console.log({range})
         range.values = values;
 
         for (let i = 3; i < values.length + 3; i = i + 4) {
@@ -144,7 +145,7 @@ const createTable = async() => {
 
         }
 
-        // Need to add * before and after each barcode
+        // Need to add * before and after each barcode 
         // Might be better to use different barcode font that does not require *
         // barcodejs
         // Need to account for different product types. Could use csv parse

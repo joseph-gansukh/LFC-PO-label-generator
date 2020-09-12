@@ -2,6 +2,7 @@
 const sortBlankColumns = async(criteria = "Blank") => {
     await Excel.run(async cxt => {
         const sheet = cxt.workbook.worksheets.getActiveWorksheet();
+        // console.log({sheet})
         sheet.getRange("A:C").delete(Excel.DeleteShiftDirection.left);
         const range = sheet.getRange("A1:BB5000");
         const header = range.find(criteria, {});

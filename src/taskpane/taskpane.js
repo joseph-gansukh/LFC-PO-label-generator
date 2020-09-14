@@ -22,7 +22,7 @@ export async function run() {
     try {
         await Excel.run(async context => {
             /**
-             * Insert your Excel code here
+             * Insert your Excel code here for execution
              */
             // const range = context.workbook.getSelectedRange();
 

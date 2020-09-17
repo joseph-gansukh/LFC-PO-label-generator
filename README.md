@@ -1,3 +1,3 @@
 # PO barcode generator
 
-Generate barcodes from product barcode data
+Generate barcodes from product barcode data from a csv
